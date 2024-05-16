@@ -25,7 +25,8 @@ export default config({
 		'yarn.lock',
 		'**/yarn.lock/**',
 		'README.md',
-		'.github/**/*'
+		'.github/**/*',
+		'.changeset/**/*'
 	],
 	svelte: true
 });
