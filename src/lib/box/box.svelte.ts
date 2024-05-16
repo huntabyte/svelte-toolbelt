@@ -4,15 +4,15 @@ import { isFunction, isObject } from '$lib/internal/utils/is.js';
 const BoxSymbol = Symbol('box');
 const isWritableSymbol = Symbol('is-writable');
 
-export interface ReadableBox<T> {
+export type ReadableBox<T> = {
 	readonly [BoxSymbol]: true;
 	readonly value: T;
-}
+};
 
-export interface WritableBox<T> extends ReadableBox<T> {
+export type WritableBox<T> = ReadableBox<T> & {
 	readonly [isWritableSymbol]: true;
 	value: T;
-}
+};
 
 /**
  * @returns Whether the value is a Box

@@ -23,7 +23,9 @@ export default config({
 		'package-lock.json',
 		'**/package-lock.json/**',
 		'yarn.lock',
-		'**/yarn.lock/**'
+		'**/yarn.lock/**',
+		'README.md',
+		'.github/**/*'
 	],
 	svelte: true
 });
