@@ -4,7 +4,7 @@ import { isFunction } from '$lib/internal/utils/is.js';
 
 export function unbox<T>(value: MaybeBoxOrGetter<T>): T {
 	if (box.isBox(value)) {
-		return value.value;
+		return value.current;
 	}
 
 	if (isFunction(value)) {
