@@ -6,12 +6,12 @@ const isWritableSymbol = Symbol('is-writable');
 
 export type ReadableBox<T> = {
 	readonly [BoxSymbol]: true;
-	readonly value: T;
+	readonly current: T;
 };
 
 export type WritableBox<T> = ReadableBox<T> & {
 	readonly [isWritableSymbol]: true;
-	value: T;
+	current: T;
 };
 
 /**
@@ -34,7 +34,7 @@ function isWritableBox(value: unknown): value is WritableBox<unknown> {
 /**
  * Creates a writable box.
  *
- * @returns A box with a `value` property which can be set to a new value.
+ * @returns A box with a `current` property which can be set to a new value.
  * Useful to pass state to other functions.
  *
  * @see {@link https://runed.dev/docs/functions/box}
@@ -44,23 +44,23 @@ export function box<T>(): WritableBox<T | undefined>;
  * Creates a writable box with an initial value.
  *
  * @param initialValue The initial value of the box.
- * @returns A box with a `value` property which can be set to a new value.
+ * @returns A box with a `current` property which can be set to a new value.
  * Useful to pass state to other functions.
  *
  * @see {@link https://runed.dev/docs/functions/box}
  */
 export function box<T>(initialValue: T): WritableBox<T>;
 export function box(initialValue?: unknown) {
-	let value = $state(initialValue);
+	let current = $state(initialValue);
 
 	return {
 		[BoxSymbol]: true,
 		[isWritableSymbol]: true,
-		get value() {
-			return value as unknown;
+		get current() {
+			return current as unknown;
 		},
-		set value(v: unknown) {
-			value = v;
+		set current(v: unknown) {
+			current = v;
 		}
 	};
 }
@@ -69,7 +69,7 @@ export function box(initialValue?: unknown) {
  * Creates a readonly box
  *
  * @param getter Function to get the value of the box
- * @returns A box with a `value` property whose value is the result of the getter.
+ * @returns A box with a `current` property whose value is the result of the getter.
  * Useful to pass state to other functions.
  *
  * @see {@link https://runed.dev/docs/functions/box}
@@ -80,7 +80,7 @@ function boxWith<T>(getter: () => T): ReadableBox<T>;
  *
  * @param getter Function to get the value of the box
  * @param setter Function to set the value of the box
- * @returns A box with a `value` property which can be set to a new value.
+ * @returns A box with a `current` property which can be set to a new value.
  * Useful to pass state to other functions.
  *
  * @see {@link https://runed.dev/docs/functions/box}
@@ -93,10 +93,10 @@ function boxWith<T>(getter: () => T, setter?: (v: T) => void) {
 		return {
 			[BoxSymbol]: true,
 			[isWritableSymbol]: true,
-			get value() {
+			get current() {
 				return derived;
 			},
-			set value(v: T) {
+			set current(v: T) {
 				setter(v);
 			}
 		};
@@ -104,7 +104,7 @@ function boxWith<T>(getter: () => T, setter?: (v: T) => void) {
 
 	return {
 		[BoxSymbol]: true,
-		get value() {
+		get current() {
 			return getter();
 		}
 	};
@@ -114,7 +114,7 @@ function boxWith<T>(getter: () => T, setter?: (v: T) => void) {
  * Creates a box from either a static value, a box, or a getter function.
  * Useful when you want to receive any of these types of values and generate a boxed version of it.
  *
- * @returns A box with a `value` property whose value.
+ * @returns A box with a `current` property whose value.
  *
  * @see {@link https://runed.dev/docs/functions/box}
  */
@@ -164,7 +164,7 @@ type BoxFlatten<R extends Record<string, unknown>> = Expand<
  *
  * @example
  * const count = box(0)
- * const flat = box.flatten({ count, double: box.with(() => count.value) })
+ * const flat = box.flatten({ count, double: box.with(() => count.current) })
  * // type of flat is { count: number, readonly double: number }
  *
  * @see {@link https://runed.dev/docs/functions/box}
@@ -178,17 +178,17 @@ function boxFlatten<R extends Record<string, unknown>>(boxes: R): BoxFlatten<R> 
 		if (box.isWritableBox(b)) {
 			Object.defineProperty(acc, key, {
 				get() {
-					return b.value;
+					return b.current;
 				},
 				// eslint-disable-next-line ts/no-explicit-any
 				set(v: any) {
-					b.value = v;
+					b.current = v;
 				}
 			});
 		} else {
 			Object.defineProperty(acc, key, {
 				get() {
-					return b.value;
+					return b.current;
 				}
 			});
 		}
@@ -211,8 +211,8 @@ function toReadonlyBox<T>(b: ReadableBox<T>): ReadableBox<T> {
 
 	return {
 		[BoxSymbol]: true,
-		get value() {
-			return b.value;
+		get current() {
+			return b.current;
 		}
 	};
 }

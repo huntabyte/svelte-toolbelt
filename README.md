@@ -22,8 +22,8 @@ Initializes a writable boxed state.
 	const count = box(0);
 </script>
 
-<button onclick={() => count.value++}>
-	clicks: {count.value}
+<button onclick={() => count.current++}>
+	clicks: {count.current}
 </button>
 ```
 
@@ -40,17 +40,17 @@ Useful for passing synced reactive values across boundaries.
 	function useCounter(count: WritableBox<number>) {
 		return {
 			increment() {
-				count.value++;
+				count.current++;
 			},
 			// We pass a box that doubles the count value
-			double: box.with(() => count.value * 2)
+			double: box.with(() => count.current * 2)
 		};
 	}
 	let count = $state(0);
 	// We pass count to box.with so it stays in sync
 	const { double, increment } = useCounter(
 		box.with(
-			() => count.value,
+			() => count.current,
 			(v) => (count = v)
 		)
 	);
@@ -58,7 +58,7 @@ Useful for passing synced reactive values across boundaries.
 
 <button onclick={increment}>
 	clicks: {count}
-	double: {double.value}
+	double: {double.current}
 </button>
 ```
 
@@ -76,43 +76,43 @@ Useful for receiving arguments that may or may not be reactive.
 		return {
 			count,
 			increment() {
-				count.value++;
+				count.current++;
 			},
 			// We pass a box that doubles the count value
-			double: box.with(() => count.value * 2)
+			double: box.with(() => count.current * 2)
 		};
 	}
 	const counter1 = useCounter(1);
-	console.log(counter1.count.value); // 1
-	console.log(counter1.double.value); // 2
+	console.log(counter1.count.current); // 1
+	console.log(counter1.double.current); // 2
 	const counter2 = useCounter(box(2));
-	console.log(counter2.count.value); // 2
-	console.log(counter2.double.value); // 4
+	console.log(counter2.count.current); // 2
+	console.log(counter2.double.current); // 4
 	function useDouble(_count: number | (() => number) | ReadableBox<number>) {
 		const count = box.from(_count);
-		return box.with(() => count.value * 2);
+		return box.with(() => count.current * 2);
 	}
 	const double1 = useDouble(1);
-	console.log(double1.value); // 2
+	console.log(double1.current); // 2
 	const double2 = useDouble(box(2));
-	console.log(double2.value); // 4
-	const double3 = useDouble(() => counter1.count.value);
-	console.log(double3.value); // 2
+	console.log(double2.current); // 4
+	const double3 = useDouble(() => counter1.count.current);
+	console.log(double3.current); // 2
 </script>
 ```
 
 ### `box.flatten`
 
 Transforms any boxes within an object to reactive properties, removing the need to access each
-property with `.value`.
+property with `.current`.
 
 ```ts
 const count = box(1);
 const flat = box.flatten({
 	count,
-	double: box.with(() => count.value * 2),
+	double: box.with(() => count.current * 2),
 	increment() {
-		count.value++;
+		count.current++;
 	}
 });
 
@@ -129,11 +129,11 @@ Creates a readonly box from a writable box that remains in sync with the origina
 ```ts
 const count = box(1);
 const readonlyCount = box.readonly(count);
-console.log(readonlyCount.value); // 1
-count.value++;
-console.log(readonlyCount.value); // 2
+console.log(readonlyCount.current); // 1
+count.current++;
+console.log(readonlyCount.current); // 2
 
-readonlyCount.value = 3; // Error: Cannot assign to read only property 'value' of object
+readonlyCount.current = 3; // Error: Cannot assign to read only property 'value' of object
 ```
 
 ### `box.isBox`
@@ -152,7 +152,7 @@ Checks if a value is a `WritableBox`.
 
 ```ts
 const count = box(1);
-const double = box.with(() => count.value * 2);
+const double = box.with(() => count.current * 2);
 console.log(box.isWritableBox(count)); // true
 console.log(box.isWritableBox(double)); // false
 ```

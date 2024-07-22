@@ -5,50 +5,50 @@ import type { MaybeBoxOrGetter } from '$lib/types.js';
 describe('box', () => {
 	test('box with initial value should be settable', () => {
 		const count = box(0);
-		expect(count.value).toBe(0);
-		count.value = 1;
-		expect(count.value).toBe(1);
+		expect(count.current).toBe(0);
+		count.current = 1;
+		expect(count.current).toBe(1);
 	});
 });
 
 describe('box.from', () => {
 	test('box of writable box should be settable', () => {
 		const count = box.from(box(0));
-		expect(count.value).toBe(0);
-		count.value = 1;
-		expect(count.value).toBe(1);
+		expect(count.current).toBe(0);
+		count.current = 1;
+		expect(count.current).toBe(1);
 	});
 
 	test('box of readable box should not be settable', () => {
 		const count = box.from(box.with(() => 0));
-		expect(count.value).toBe(0);
+		expect(count.current).toBe(0);
 		// @ts-expect-error -- we're testing that the setter is not run
-		expect(() => (count.value = 1)).toThrow();
+		expect(() => (count.current = 1)).toThrow();
 	});
 
 	test('can set box of box or value', () => {
 		const count = 0 as number | WritableBox<number>;
 		const reCount = box.from(count);
-		expect(reCount.value).toBe(0);
-		reCount.value = 1;
-		expect(reCount.value).toBe(1);
+		expect(reCount.current).toBe(0);
+		reCount.current = 1;
+		expect(reCount.current).toBe(1);
 	});
 });
 
 describe('box.with', () => {
 	test('box with getter only should return value and not be settable', () => {
 		const count = box.with(() => 0);
-		expect(count.value).toBe(0);
+		expect(count.current).toBe(0);
 		// @ts-expect-error -- we're testing that the setter is not run
-		expect(() => (count.value = 1)).toThrow();
+		expect(() => (count.current = 1)).toThrow();
 	});
 
 	test('box with state getter should be reactive', () => {
 		let value = $state(0);
 		const count = box.with(() => value);
-		expect(count.value).toBe(0);
+		expect(count.current).toBe(0);
 		value++;
-		expect(count.value).toBe(1);
+		expect(count.current).toBe(1);
 	});
 
 	test('box with getter and setter should be reactive', () => {
@@ -57,9 +57,9 @@ describe('box.with', () => {
 			() => value,
 			(v) => (value = v * 2)
 		);
-		expect(double.value).toBe(0);
-		double.value = 1;
-		expect(double.value).toBe(2);
+		expect(double.current).toBe(0);
+		double.current = 1;
+		expect(double.current).toBe(2);
 		expect(value).toBe(2);
 	});
 });
@@ -86,31 +86,31 @@ describe('box.isWritableBox', () => {
 describe('box.flatten', () => {
 	test('flattens an object of boxes', () => {
 		const count = box(0);
-		const double = box.with(() => count.value * 2);
+		const double = box.with(() => count.current * 2);
 		function increment() {
-			count.value++;
+			count.current++;
 		}
 		const flat = box.flatten({ count, double, increment });
 
 		expect(flat.count).toBe(0);
 		expect(flat.double).toBe(0);
 
-		count.value = 1;
+		count.current = 1;
 		expect(flat.count).toBe(1);
 		expect(flat.double).toBe(2);
 
 		flat.count = 2;
-		expect(count.value).toBe(2);
+		expect(count.current).toBe(2);
 		expect(flat.count).toBe(2);
-		expect(double.value).toBe(4);
+		expect(double.current).toBe(4);
 		expect(flat.double).toBe(4);
 
 		// @ts-expect-error -- we're testing that the setter is not run
 		expect(() => (flat.double = 3)).toThrow();
 
 		flat.increment();
-		expect(count.value).toBe(3);
-		expect(double.value).toBe(6);
+		expect(count.current).toBe(3);
+		expect(double.current).toBe(6);
 		expect(flat.count).toBe(3);
 		expect(flat.double).toBe(6);
 	});
@@ -123,7 +123,7 @@ describe('box.readonly', () => {
 
 		function setReadOnlyCount() {
 			// eslint-disable-next-line ts/no-explicit-any
-			(readonlyCount as any).value = 1;
+			(readonlyCount as any).current = 1;
 		}
 
 		expect(setReadOnlyCount).toThrow();
@@ -133,12 +133,12 @@ describe('box.readonly', () => {
 		const count = box(0);
 		const readonlyCount = box.readonly(count);
 
-		expect(readonlyCount.value).toBe(0);
-		count.value = 1;
-		expect(readonlyCount.value).toBe(1);
+		expect(readonlyCount.current).toBe(0);
+		count.current = 1;
+		expect(readonlyCount.current).toBe(1);
 
-		count.value = 2;
-		expect(readonlyCount.value).toBe(2);
+		count.current = 2;
+		expect(readonlyCount.current).toBe(2);
 	});
 });
 
