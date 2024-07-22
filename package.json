@@ -12,7 +12,7 @@
 		"test": "vitest",
 		"lint": "prettier --check . && eslint .",
 		"format": "prettier --write .",
-		"release": "pnpm package && changeset publish"
+		"ci:publish": "pnpm package && changeset publish"
 	},
 	"funding": [
 		"https://github.com/sponsors/huntabyte"
