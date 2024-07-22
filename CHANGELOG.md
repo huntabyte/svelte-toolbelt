@@ -1,5 +1,13 @@
 # svelte-toolbelt
 
+## 0.1.0
+
+### Minor Changes
+
+- breaking change: change box `.value` to `.current` ([#5](https://github.com/huntabyte/svelte-toolbelt/pull/5))
+
+- breaking: value -> current ([#6](https://github.com/huntabyte/svelte-toolbelt/pull/6))
+
 ## 0.0.2
 
 ### Patch Changes
