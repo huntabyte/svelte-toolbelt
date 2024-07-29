@@ -1,5 +1,13 @@
 # svelte-toolbelt
 
+## 0.3.0
+
+### Minor Changes
+
+- Expose new helper methods commonly used in libraries ([#11](https://github.com/huntabyte/svelte-toolbelt/pull/11))
+
+- useRefById ([#11](https://github.com/huntabyte/svelte-toolbelt/pull/11))
+
 ## 0.2.0
 
 ### Minor Changes
