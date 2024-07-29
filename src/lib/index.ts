@@ -8,3 +8,4 @@ export * from "./utils/executeCallbacks.js";
 export * from "./utils/events.js";
 export * from "./utils/mergeProps.js";
 export * from "./utils/style.js";
+export * from "./utils/useRefById.svelte.js";
