@@ -1,0 +1,17 @@
+svelte-toolbelt
+=================
+The following is a list of sources from which code was used/modified in this codebase.
+
+-------------------------------------------------------------------------------
+This codebase contains a modified portion of code from Adobe which can be obtained at:
+  * SOURCE:
+    * https://www.npmjs.com/package/@react-aria/utils
+  * LICENSE (Apache 2.0):
+    * https://unpkg.com/@react-aria/utils@3.24.1/LICENSE
+
+  * SOURCE:
+    * https://www.npmjs.com/package/react-stately
+  * LICENSE (Apache 2.0):
+    * https://unpkg.com/react-stately@3.31.1/LICENSE
+
+-------------------------------------------------------------------------------
