@@ -1,9 +1,9 @@
-import { describe, expect, expectTypeOf, test } from 'vitest';
-import { type ReadableBox, type WritableBox, box } from './box.svelte.js';
-import type { MaybeBoxOrGetter } from '$lib/types.js';
+import { describe, expect, expectTypeOf, test } from "vitest";
+import { type ReadableBox, type WritableBox, box } from "./box.svelte.js";
+import type { MaybeBoxOrGetter } from "$lib/types.js";
 
-describe('box', () => {
-	test('box with initial value should be settable', () => {
+describe("box", () => {
+	test("box with initial value should be settable", () => {
 		const count = box(0);
 		expect(count.current).toBe(0);
 		count.current = 1;
@@ -11,22 +11,22 @@ describe('box', () => {
 	});
 });
 
-describe('box.from', () => {
-	test('box of writable box should be settable', () => {
+describe("box.from", () => {
+	test("box of writable box should be settable", () => {
 		const count = box.from(box(0));
 		expect(count.current).toBe(0);
 		count.current = 1;
 		expect(count.current).toBe(1);
 	});
 
-	test('box of readable box should not be settable', () => {
+	test("box of readable box should not be settable", () => {
 		const count = box.from(box.with(() => 0));
 		expect(count.current).toBe(0);
 		// @ts-expect-error -- we're testing that the setter is not run
 		expect(() => (count.current = 1)).toThrow();
 	});
 
-	test('can set box of box or value', () => {
+	test("can set box of box or value", () => {
 		const count = 0 as number | WritableBox<number>;
 		const reCount = box.from(count);
 		expect(reCount.current).toBe(0);
@@ -35,15 +35,15 @@ describe('box.from', () => {
 	});
 });
 
-describe('box.with', () => {
-	test('box with getter only should return value and not be settable', () => {
+describe("box.with", () => {
+	test("box with getter only should return value and not be settable", () => {
 		const count = box.with(() => 0);
 		expect(count.current).toBe(0);
 		// @ts-expect-error -- we're testing that the setter is not run
 		expect(() => (count.current = 1)).toThrow();
 	});
 
-	test('box with state getter should be reactive', () => {
+	test("box with state getter should be reactive", () => {
 		let value = $state(0);
 		const count = box.with(() => value);
 		expect(count.current).toBe(0);
@@ -51,7 +51,7 @@ describe('box.with', () => {
 		expect(count.current).toBe(1);
 	});
 
-	test('box with getter and setter should be reactive', () => {
+	test("box with getter and setter should be reactive", () => {
 		let value = $state(0);
 		const double = box.with(
 			() => value,
@@ -64,27 +64,27 @@ describe('box.with', () => {
 	});
 });
 
-describe('box.isBox', () => {
-	test('box should be a box', () => {
+describe("box.isBox", () => {
+	test("box should be a box", () => {
 		const count = box(0);
 		expect(box.isBox(count)).toBe(true);
 	});
 });
 
-describe('box.isWritableBox', () => {
-	test('writable box should be a writable box', () => {
+describe("box.isWritableBox", () => {
+	test("writable box should be a writable box", () => {
 		const count = box(0);
 		expect(box.isWritableBox(count)).toBe(true);
 	});
 
-	test('readable box should not be a writable box', () => {
+	test("readable box should not be a writable box", () => {
 		const count = box.from(() => 0);
 		expect(box.isWritableBox(count)).toBe(false);
 	});
 });
 
-describe('box.flatten', () => {
-	test('flattens an object of boxes', () => {
+describe("box.flatten", () => {
+	test("flattens an object of boxes", () => {
 		const count = box(0);
 		const double = box.with(() => count.current * 2);
 		function increment() {
@@ -116,8 +116,8 @@ describe('box.flatten', () => {
 	});
 });
 
-describe('box.readonly', () => {
-	test('box.readonly returns a non-settable box', () => {
+describe("box.readonly", () => {
+	test("box.readonly returns a non-settable box", () => {
 		const count = box(0);
 		const readonlyCount = box.readonly(count);
 
@@ -129,7 +129,7 @@ describe('box.readonly', () => {
 		expect(setReadOnlyCount).toThrow();
 	});
 
-	test('box.readonly returned box should update with original box', () => {
+	test("box.readonly returned box should update with original box", () => {
 		const count = box(0);
 		const readonlyCount = box.readonly(count);
 
@@ -142,43 +142,43 @@ describe('box.readonly', () => {
 	});
 });
 
-describe('box types', () => {
-	test('box without initial value', () => {
+describe("box types", () => {
+	test("box without initial value", () => {
 		const count = box<number>();
 		expectTypeOf(count).toMatchTypeOf<WritableBox<number | undefined>>();
 		expectTypeOf(count).toMatchTypeOf<ReadableBox<number | undefined>>();
 	});
 
-	test('box with initial value', () => {
+	test("box with initial value", () => {
 		const count = box(0);
 		expectTypeOf(count).toMatchTypeOf<WritableBox<number>>();
 		expectTypeOf(count).toMatchTypeOf<ReadableBox<number>>();
 	});
 
-	test('box from writable box', () => {
+	test("box from writable box", () => {
 		const count = box.from(box(0));
 		expectTypeOf(count).toMatchTypeOf<WritableBox<number>>();
 	});
 
-	test('box from readable box', () => {
+	test("box from readable box", () => {
 		const count = box.from(box.with(() => 0));
 		expectTypeOf(count).toMatchTypeOf<ReadableBox<number>>();
 		expectTypeOf(count).not.toMatchTypeOf<WritableBox<number>>();
 	});
 
-	test('box from box or value', () => {
+	test("box from box or value", () => {
 		const count = 0 as number | ReadableBox<number>;
 		const count2 = box.from(count);
 		expectTypeOf(count2).toMatchTypeOf<ReadableBox<number>>();
 	});
 
-	test('box from maybe box or getter', () => {
+	test("box from maybe box or getter", () => {
 		const count = 0 as MaybeBoxOrGetter<number>;
 		const count2 = box.from(count);
 		expectTypeOf(count2).toMatchTypeOf<ReadableBox<number>>();
 	});
 
-	test('box.isWritableBox = true should allow box to be settable', () => {
+	test("box.isWritableBox = true should allow box to be settable", () => {
 		const count = box(0) as WritableBox<number> | ReadableBox<number>;
 		expectTypeOf(count).toMatchTypeOf<ReadableBox<number>>();
 		expect(box.isWritableBox(count)).toBe(true);
@@ -188,7 +188,7 @@ describe('box types', () => {
 		}
 	});
 
-	test('box.readonly should return a non-settable box', () => {
+	test("box.readonly should return a non-settable box", () => {
 		const count = box(0);
 		const readonlyCount = box.readonly(count);
 		expectTypeOf(readonlyCount).toMatchTypeOf<ReadableBox<number>>();
