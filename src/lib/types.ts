@@ -34,7 +34,7 @@ export type WithChild<
 	/**
 	 * The props that the component accepts.
 	 */
-	// eslint-disable-next-line ts/no-empty-object-type
+
 	Props extends Record<PropertyKey, unknown> = {},
 	/**
 	 * The props that are passed to the `child` and `children` snippets. The `ElementProps` are
@@ -55,7 +55,6 @@ export type WithChild<
 	ref?: Ref | null | undefined;
 };
 
-// eslint-disable-next-line ts/no-empty-object-type
 export type WithChildren<Props = {}> = Props & {
 	children?: Snippet | undefined;
 };
@@ -72,7 +71,6 @@ export type WithChildren<Props = {}> = Props & {
  */
 export type Without<T extends object, U extends object> = Omit<T, keyof U>;
 
-// eslint-disable-next-line ts/no-empty-object-type
 export type WithRefProps<T = {}> = T &
 	ReadableBoxedValues<{ id: string }> &
 	WritableBoxedValues<{ ref: HTMLElement | null }>;

@@ -17,7 +17,7 @@ type PropsArg = Props | null | undefined;
 type TupleTypes<T> = { [P in keyof T]: T[P] } extends { [key: number]: infer V }
 	? NullToObject<V>
 	: never;
-// eslint-disable-next-line ts/no-empty-object-type
+
 type NullToObject<T> = T extends null | undefined ? {} : T;
 // eslint-disable-next-line ts/no-explicit-any
 type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends (k: infer I) => void
