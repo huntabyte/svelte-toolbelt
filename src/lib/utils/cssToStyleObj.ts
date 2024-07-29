@@ -1,6 +1,6 @@
-import parse from 'style-to-object';
-import { camelCase, pascalCase } from 'scule';
-import type { StyleProperties } from '$lib/types.js';
+import parse from "style-to-object";
+import { camelCase, pascalCase } from "scule";
+import type { StyleProperties } from "$lib/types.js";
 
 export function cssToStyleObj(css: string | null | undefined): StyleProperties {
 	if (!css) return {};
@@ -8,15 +8,15 @@ export function cssToStyleObj(css: string | null | undefined): StyleProperties {
 
 	function iterator(name: string, value: string) {
 		if (
-			name.startsWith('-moz-') ||
-			name.startsWith('-webkit-') ||
-			name.startsWith('-ms-') ||
-			name.startsWith('-o-')
+			name.startsWith("-moz-") ||
+			name.startsWith("-webkit-") ||
+			name.startsWith("-ms-") ||
+			name.startsWith("-o-")
 		) {
 			styleObj[pascalCase(name)] = value;
 			return;
 		}
-		if (name.startsWith('--')) {
+		if (name.startsWith("--")) {
 			styleObj[name] = value;
 			return;
 		}

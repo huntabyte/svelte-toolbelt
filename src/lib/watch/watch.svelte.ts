@@ -1,5 +1,5 @@
-import { untrack } from 'svelte';
-import type { Box } from '$lib/types.js';
+import { untrack } from "svelte";
+import type { Box } from "$lib/types.js";
 
 type WatcherCallback<T> = (
 	curr: T,

@@ -18,7 +18,7 @@ Initializes a writable boxed state.
 
 ```svelte
 <script lang="ts">
-	import { box } from 'runed';
+	import { box } from "runed";
 	const count = box(0);
 </script>
 
@@ -36,7 +36,7 @@ Useful for passing synced reactive values across boundaries.
 
 ```svelte
 <script lang="ts">
-	import { type WritableBox, box } from 'runed';
+	import { type WritableBox, box } from "runed";
 	function useCounter(count: WritableBox<number>) {
 		return {
 			increment() {
@@ -70,7 +70,7 @@ Useful for receiving arguments that may or may not be reactive.
 
 ```svelte
 <script lang="ts">
-	import { box } from 'runed';
+	import { box } from "runed";
 	function useCounter(_count: WritableBox<number> | number) {
 		const count = box.from(_count);
 		return {

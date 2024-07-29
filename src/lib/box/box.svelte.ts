@@ -1,8 +1,8 @@
-import type { Expand, Getter, MaybeBoxOrGetter } from '$lib/types.js';
-import { isFunction, isObject } from '$lib/utils/is.js';
+import type { Expand, Getter, MaybeBoxOrGetter } from "$lib/types.js";
+import { isFunction, isObject } from "$lib/utils/is.js";
 
-const BoxSymbol = Symbol('box');
-const isWritableSymbol = Symbol('is-writable');
+const BoxSymbol = Symbol("box");
+const isWritableSymbol = Symbol("is-writable");
 
 export type ReadableBox<T> = {
 	readonly [BoxSymbol]: true;

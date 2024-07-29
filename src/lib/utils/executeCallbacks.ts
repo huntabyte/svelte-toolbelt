@@ -9,7 +9,7 @@ export function executeCallbacks<T extends unknown[]>(
 ): (...args: unknown[]) => void {
 	return (...args: unknown[]) => {
 		for (const callback of callbacks) {
-			if (typeof callback === 'function') {
+			if (typeof callback === "function") {
 				callback(...args);
 			}
 		}

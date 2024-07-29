@@ -1,5 +1,5 @@
-import type { EventCallback } from './events.js';
-import type { ReadableBox } from '$lib/box/box.svelte.js';
+import type { EventCallback } from "./events.js";
+import type { ReadableBox } from "$lib/box/box.svelte.js";
 
 /**
  * Composes event handlers into a single function that can be called with an event.
@@ -13,7 +13,7 @@ export function composeHandlers<E extends Event = Event, T extends Element = Ele
 		for (const handler of handlers) {
 			if (!handler) continue;
 			if (e.defaultPrevented) return;
-			if (typeof handler === 'function') {
+			if (typeof handler === "function") {
 				handler.call(this, e);
 			} else {
 				handler.current?.call(this, e);

@@ -1,4 +1,4 @@
-declare module 'style-object-to-css-string' {
+declare module "style-object-to-css-string" {
 	export default objToString;
 	/**
 	 * Translate a style object into a CSS string

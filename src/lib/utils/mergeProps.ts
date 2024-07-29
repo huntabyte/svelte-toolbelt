@@ -1,13 +1,13 @@
 /**
  * Modified from https://github.com/adobe/react-spectrum/blob/main/packages/%40react-aria/utils/src/mergeProps.ts (see NOTICE.txt for source)
  */
-import { clsx } from 'clsx';
-import type { EventCallback } from './events.js';
-import { composeHandlers } from './composeHandlers.js';
-import { cssToStyleObj } from './cssToStyleObj.js';
-import { executeCallbacks } from '$lib/utils/executeCallbacks.js';
-import { styleToString } from '$lib/utils/style.js';
-import type { StyleProperties } from '$lib/types.js';
+import { clsx } from "clsx";
+import type { EventCallback } from "./events.js";
+import { composeHandlers } from "./composeHandlers.js";
+import { cssToStyleObj } from "./cssToStyleObj.js";
+import { executeCallbacks } from "$lib/utils/executeCallbacks.js";
+import { styleToString } from "$lib/utils/style.js";
+import type { StyleProperties } from "$lib/types.js";
 
 type Props = Record<string, unknown>;
 
@@ -27,7 +27,7 @@ type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends (
 function isEventHandler(key: string): boolean {
 	// we check if the 3rd character is uppercase to avoid merging our own
 	// custom callbacks like `onValueChange` and strictly merge native event handlers
-	return key.length > 2 && key.startsWith('on') && key[2] === key[2]?.toLowerCase();
+	return key.length > 2 && key.startsWith("on") && key[2] === key[2]?.toLowerCase();
 }
 
 /**
@@ -52,8 +52,8 @@ export function mergeProps<T extends PropsArg[]>(
 			const a = result[key];
 			const b = props[key];
 
-			const aIsFunction = typeof a === 'function';
-			const bIsFunction = typeof b === 'function';
+			const aIsFunction = typeof a === "function";
+			const bIsFunction = typeof b === "function";
 
 			// compose event handlers
 			if (aIsFunction && typeof bIsFunction && isEventHandler(key)) {
@@ -64,14 +64,14 @@ export function mergeProps<T extends PropsArg[]>(
 			} else if (aIsFunction && bIsFunction) {
 				// chain non-event handler functions
 				result[key] = executeCallbacks(a, b);
-			} else if (key === 'class' && typeof a === 'string' && typeof b === 'string') {
+			} else if (key === "class" && typeof a === "string" && typeof b === "string") {
 				// handle merging class strings
 				result[key] = clsx(a, b);
-			} else if (key === 'style') {
-				const aIsObject = typeof a === 'object';
-				const bIsObject = typeof b === 'object';
-				const aIsString = typeof a === 'string';
-				const bIsString = typeof b === 'string';
+			} else if (key === "style") {
+				const aIsObject = typeof a === "object";
+				const bIsObject = typeof b === "object";
+				const aIsString = typeof a === "string";
+				const bIsString = typeof b === "string";
 				if (aIsObject && bIsObject) {
 					// both are style objects, merge them
 					result[key] = { ...a, ...b };
@@ -101,8 +101,8 @@ export function mergeProps<T extends PropsArg[]>(
 	}
 
 	// convert style object to string
-	if (typeof result.style === 'object') {
-		result.style = styleToString(result.style as StyleProperties).replaceAll('\n', ' ');
+	if (typeof result.style === "object") {
+		result.style = styleToString(result.style as StyleProperties).replaceAll("\n", " ");
 	}
 
 	// handle weird svelte bug where `hidden` is not removed when set to `false`
