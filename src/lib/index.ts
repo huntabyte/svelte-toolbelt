@@ -9,3 +9,4 @@ export * from "./utils/events.js";
 export * from "./utils/mergeProps.js";
 export * from "./utils/style.js";
 export * from "./utils/useRefById.svelte.js";
+export * from "./utils/useId.js";
