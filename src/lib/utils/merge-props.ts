@@ -3,9 +3,9 @@
  */
 import { clsx } from "clsx";
 import type { EventCallback } from "./events.js";
-import { composeHandlers } from "./composeHandlers.js";
-import { cssToStyleObj } from "./cssToStyleObj.js";
-import { executeCallbacks } from "$lib/utils/executeCallbacks.js";
+import { composeHandlers } from "./compose-handlers.js";
+import { cssToStyleObj } from "./css-to-style-obj.js";
+import { executeCallbacks } from "$lib/utils/execute-callbacks.js";
 import { styleToString } from "$lib/utils/style.js";
 import type { StyleProperties } from "$lib/types.js";
 
