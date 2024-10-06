@@ -34,7 +34,6 @@ export type WithChild<
 	/**
 	 * The props that the component accepts.
 	 */
-
 	Props extends Record<PropertyKey, unknown> = {},
 	/**
 	 * The props that are passed to the `child` and `children` snippets. The `ElementProps` are
@@ -87,3 +86,6 @@ export type StyleProperties = CSS.Properties & {
 	// eslint-disable-next-line ts/no-explicit-any
 	[str: `--${string}`]: any;
 };
+
+// eslint-disable-next-line ts/no-explicit-any
+export type AnyFn = (...args: any[]) => any;

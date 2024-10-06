@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from "vitest";
-import { executeCallbacks } from "./executeCallbacks.js";
+import { executeCallbacks } from "./execute-callbacks.js";
 
 describe("executeCallbacks", () => {
 	it("should execute all callback functions with the same arguments", () => {
