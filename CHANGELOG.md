@@ -1,5 +1,11 @@
 # svelte-toolbelt
 
+## 0.4.0
+
+### Minor Changes
+
+- feat: add additional utils ([#16](https://github.com/huntabyte/svelte-toolbelt/pull/16))
+
 ## 0.3.1
 
 ### Patch Changes
