@@ -35,12 +35,13 @@ export function useRefById({
 	deps = () => true,
 	onRefChange = () => {}
 }: UseRefByIdProps) {
+	const dependencies = $derived.by(() => deps());
 	$effect(() => {
 		// re-run when the ID changes.
 		id.current;
 		// re-run when the deps changes.
-		deps();
-		untrack(() => {
+		dependencies;
+		return untrack(() => {
 			const node = document.getElementById(id.current);
 			ref.current = node;
 			onRefChange(ref.current);
