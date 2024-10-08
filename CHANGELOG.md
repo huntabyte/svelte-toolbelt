@@ -1,5 +1,11 @@
 # svelte-toolbelt
 
+## 0.4.1
+
+### Patch Changes
+
+- fix: exports ([#18](https://github.com/huntabyte/svelte-toolbelt/pull/18))
+
 ## 0.4.0
 
 ### Minor Changes
