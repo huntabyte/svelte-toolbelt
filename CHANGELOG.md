@@ -1,5 +1,11 @@
 # svelte-toolbelt
 
+## 0.4.2
+
+### Patch Changes
+
+- fix: useRefById dependencies ([#20](https://github.com/huntabyte/svelte-toolbelt/pull/20))
+
 ## 0.4.1
 
 ### Patch Changes
