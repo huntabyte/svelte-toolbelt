@@ -1,5 +1,11 @@
 # svelte-toolbelt
 
+## 0.4.3
+
+### Patch Changes
+
+- support node 18 for stackblitz ;? ([#22](https://github.com/huntabyte/svelte-toolbelt/pull/22))
+
 ## 0.4.2
 
 ### Patch Changes
