@@ -22,6 +22,12 @@ type UseRefByIdProps = {
 	 * A callback fired when the ref changes.
 	 */
 	onRefChange?: (node: HTMLElement | null) => void;
+
+	/**
+	 * A function that returns the root node to search for the element by ID.
+	 * Defaults to `() => document`.
+	 */
+	getRootNode?: Getter<Document | ShadowRoot>;
 };
 
 /**
@@ -33,16 +39,19 @@ export function useRefById({
 	id,
 	ref,
 	deps = () => true,
-	onRefChange = () => {}
+	onRefChange = () => {},
+	getRootNode = () => document
 }: UseRefByIdProps) {
 	const dependencies = $derived.by(() => deps());
+	const rootNode = $derived.by(() => getRootNode());
 	$effect(() => {
 		// re-run when the ID changes.
 		id.current;
 		// re-run when the deps changes.
 		dependencies;
+		rootNode;
 		return untrack(() => {
-			const node = document.getElementById(id.current);
+			const node = rootNode.getElementById(id.current);
 			ref.current = node;
 			onRefChange(ref.current);
 		});
