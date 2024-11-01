@@ -27,7 +27,7 @@ type UseRefByIdProps = {
 	 * A function that returns the root node to search for the element by ID.
 	 * Defaults to `() => document`.
 	 */
-	getRootNode?: Getter<Document | ShadowRoot>;
+	getRootNode?: Getter<Document | ShadowRoot | undefined>;
 };
 
 /**
@@ -40,7 +40,7 @@ export function useRefById({
 	ref,
 	deps = () => true,
 	onRefChange = () => {},
-	getRootNode = () => document
+	getRootNode = () => (typeof document !== "undefined" ? document : undefined)
 }: UseRefByIdProps) {
 	const dependencies = $derived.by(() => deps());
 	const rootNode = $derived.by(() => getRootNode());
@@ -51,8 +51,12 @@ export function useRefById({
 		dependencies;
 		rootNode;
 		return untrack(() => {
-			const node = rootNode.getElementById(id.current);
-			ref.current = node;
+			const node = rootNode?.getElementById(id.current);
+			if (node) {
+				ref.current = node;
+			} else {
+				ref.current = null;
+			}
 			onRefChange(ref.current);
 		});
 	});
