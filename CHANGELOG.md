@@ -1,5 +1,11 @@
 # svelte-toolbelt
 
+## 0.4.6
+
+### Patch Changes
+
+- hotfix: document check ([#29](https://github.com/huntabyte/svelte-toolbelt/pull/29))
+
 ## 0.4.5
 
 ### Patch Changes
