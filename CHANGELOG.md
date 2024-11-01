@@ -1,5 +1,11 @@
 # svelte-toolbelt
 
+## 0.4.5
+
+### Patch Changes
+
+- feat: shadow dom support ([#27](https://github.com/huntabyte/svelte-toolbelt/pull/27))
+
 ## 0.4.4
 
 ### Patch Changes
