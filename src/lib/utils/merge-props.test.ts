@@ -159,4 +159,11 @@ describe("mergeProps", () => {
 		const result = mergeProps(props1, props2);
 		expect(result).toEqual({ style: "color: blue;" });
 	});
+
+	it("should merge classnames via clsx", () => {
+		const props1 = { class: "text-lg font-bold" };
+		const props2 = { class: ["bg-blue-500", "hover:bg-blue-600"] };
+		const result = mergeProps(props1, props2);
+		expect(result).toEqual({ class: "text-lg font-bold bg-blue-500 hover:bg-blue-600" });
+	});
 });

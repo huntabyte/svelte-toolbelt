@@ -1,10 +1,11 @@
 /**
  * Modified from https://github.com/adobe/react-spectrum/blob/main/packages/%40react-aria/utils/src/mergeProps.ts (see NOTICE.txt for source)
  */
-import { clsx } from "clsx";
+import { type ClassValue, clsx } from "clsx";
 import type { EventCallback } from "./events.js";
 import { composeHandlers } from "./compose-handlers.js";
 import { cssToStyleObj } from "./css-to-style-obj.js";
+import { isClassValue } from "./is.js";
 import { executeCallbacks } from "$lib/utils/execute-callbacks.js";
 import { styleToString } from "$lib/utils/style.js";
 import type { StyleProperties } from "$lib/types.js";
@@ -64,9 +65,18 @@ export function mergeProps<T extends PropsArg[]>(
 			} else if (aIsFunction && bIsFunction) {
 				// chain non-event handler functions
 				result[key] = executeCallbacks(a, b);
-			} else if (key === "class" && typeof a === "string" && typeof b === "string") {
-				// handle merging class strings
-				result[key] = clsx(a, b);
+			} else if (key === "class") {
+				// handle merging acceptable class values from clsx
+				const aIsClassValue = isClassValue(a);
+				const bIsClassValue = isClassValue(b);
+
+				if (aIsClassValue && bIsClassValue) {
+					result[key] = clsx(a, b);
+				} else if (aIsClassValue) {
+					result[key] = clsx(a);
+				} else if (bIsClassValue) {
+					result[key] = clsx(b);
+				}
 			} else if (key === "style") {
 				const aIsObject = typeof a === "object";
 				const bIsObject = typeof b === "object";
