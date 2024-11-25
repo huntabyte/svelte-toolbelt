@@ -1,5 +1,5 @@
 import { untrack } from "svelte";
-import type { Getter } from "svelte-toolbelt";
+import type { Getter } from "$lib/types.js";
 
 /**
  * Simple helper function to sync a read-only dependency with writable state. This only syncs
