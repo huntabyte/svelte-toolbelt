@@ -122,6 +122,19 @@ describe("mergeProps", () => {
 		const props2 = { hidden: false };
 		const result = mergeProps(props1, props2);
 		expect(result).toEqual({ hidden: undefined });
+
+		const result2 = mergeProps(props2, props1);
+		expect(result2).toEqual({ hidden: true });
+	});
+
+	it("should handle the disabled attribute", () => {
+		const props1 = { disabled: true };
+		const props2 = { disabled: false };
+		const result = mergeProps(props1, props2);
+		expect(result).toEqual({ disabled: undefined });
+
+		const result2 = mergeProps(props2, props1);
+		expect(result2).toEqual({ disabled: true });
 	});
 
 	it("should chain non-function event handlers", () => {
@@ -135,5 +148,22 @@ describe("mergeProps", () => {
 
 		expect(handler1).toHaveBeenCalled();
 		expect(handler2).toHaveBeenCalled();
+	});
+
+	it("should handle merging of styles if styles only provided in props2", () => {
+		const props1 = {};
+
+		const props2 = {
+			style: "color: blue;"
+		};
+		const result = mergeProps(props1, props2);
+		expect(result).toEqual({ style: "color: blue;" });
+	});
+
+	it("should merge classnames via clsx", () => {
+		const props1 = { class: "text-lg font-bold" };
+		const props2 = { class: ["bg-blue-500", "hover:bg-blue-600"] };
+		const result = mergeProps(props1, props2);
+		expect(result).toEqual({ class: "text-lg font-bold bg-blue-500 hover:bg-blue-600" });
 	});
 });
