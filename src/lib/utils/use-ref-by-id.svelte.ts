@@ -32,7 +32,7 @@ type UseRefByIdProps = {
 
 /**
  * Finds the node with that ID and sets it to the boxed node.
- * Reactive using `$effect` to ensure when the ID or condition changes,
+ * Reactive using `$effect` to ensure when the ID or deps change,
  * an update is triggered and new node is found.
  */
 export function useRefById({
