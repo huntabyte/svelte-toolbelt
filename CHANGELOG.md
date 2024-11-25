@@ -1,5 +1,21 @@
 # svelte-toolbelt
 
+## 0.5.0
+
+### Minor Changes
+
+- add `onMountEffect` util which has the same behavior as `onMount` ([#33](https://github.com/huntabyte/svelte-toolbelt/pull/33))
+
+- add `useOnChange` hook to react to changes to reactive state ([#33](https://github.com/huntabyte/svelte-toolbelt/pull/33))
+
+### Patch Changes
+
+- return result of `setTimeout` from `afterSleep` ([#33](https://github.com/huntabyte/svelte-toolbelt/pull/33))
+
+- fix: allow use of any clsx `ClassValue` types for `class` property ([#33](https://github.com/huntabyte/svelte-toolbelt/pull/33))
+
+- fix: issue with `mergeProps` where styles in second argument wouldn't be merged ([#33](https://github.com/huntabyte/svelte-toolbelt/pull/33))
+
 ## 0.4.6
 
 ### Patch Changes
