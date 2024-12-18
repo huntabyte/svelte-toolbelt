@@ -85,21 +85,18 @@ describe("isClassValue", () => {
 
 		it("should return false for class instances", () => {
 			expect(isClassValue(new Date())).toBe(false);
-			// eslint-disable-next-line prefer-regex-literals
 			expect(isClassValue(new RegExp(""))).toBe(false);
 		});
 	});
 
 	describe("invalid types", () => {
 		it("should return false for symbols", () => {
-			// eslint-disable-next-line symbol-description
 			expect(isClassValue(Symbol())).toBe(false);
 			expect(isClassValue(Symbol("test"))).toBe(false);
 		});
 
 		it("should return false for functions", () => {
 			expect(isClassValue(() => {})).toBe(false);
-			// eslint-disable-next-line prefer-arrow-callback
 			expect(isClassValue(function () {})).toBe(false);
 			expect(isClassValue(Math.random)).toBe(false);
 		});
@@ -120,7 +117,6 @@ describe("isClassValue", () => {
 				number: 42,
 				boolean: true,
 				null: null,
-				// eslint-disable-next-line object-shorthand
 				undefined: undefined,
 				array: [
 					"nested",
@@ -139,7 +135,6 @@ describe("isClassValue", () => {
 					array: [
 						"valid",
 						{
-							// eslint-disable-next-line symbol-description
 							invalid: Symbol() // Invalid value deep in the structure
 						}
 					]

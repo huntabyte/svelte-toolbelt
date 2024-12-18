@@ -180,7 +180,7 @@ function boxFlatten<R extends Record<string, unknown>>(boxes: R): BoxFlatten<R> 
 				get() {
 					return b.current;
 				},
-				// eslint-disable-next-line ts/no-explicit-any
+				// eslint-disable-next-line @typescript-eslint/no-explicit-any
 				set(v: any) {
 					b.current = v;
 				}

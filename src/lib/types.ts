@@ -1,8 +1,8 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { Snippet } from "svelte";
 import type * as CSS from "csstype";
 import type { ReadableBox, WritableBox } from "$lib/box/box.svelte.js";
 
-// eslint-disable-next-line ts/no-explicit-any
 export type FunctionArgs<Args extends any[] = any[], Return = void> = (...args: Args) => Return;
 
 export type Getter<T> = () => T;
@@ -74,18 +74,14 @@ export type WithRefProps<T = {}> = T &
 	ReadableBoxedValues<{ id: string }> &
 	WritableBoxedValues<{ ref: HTMLElement | null }>;
 
-// eslint-disable-next-line ts/no-explicit-any
 export type WithoutChild<T> = T extends { child?: any } ? Omit<T, "child"> : T;
 export type WithoutChildrenOrChild<T> = WithoutChildren<WithoutChild<T>>;
-// eslint-disable-next-line ts/no-explicit-any
 export type WithoutChildren<T> = T extends { children?: any } ? Omit<T, "children"> : T;
 export type WithElementRef<T, U extends HTMLElement = HTMLElement> = T & { ref?: U | null };
 
 export type StyleProperties = CSS.Properties & {
 	// Allow any CSS Custom Properties
-	// eslint-disable-next-line ts/no-explicit-any
 	[str: `--${string}`]: any;
 };
 
-// eslint-disable-next-line ts/no-explicit-any
 export type AnyFn = (...args: any[]) => any;
