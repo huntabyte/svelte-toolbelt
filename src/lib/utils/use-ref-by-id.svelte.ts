@@ -42,14 +42,12 @@ export function useRefById({
 	onRefChange = () => {},
 	getRootNode = () => (typeof document !== "undefined" ? document : undefined)
 }: UseRefByIdProps) {
-	const dependencies = $derived.by(() => deps());
-	const rootNode = $derived.by(() => getRootNode());
 	$effect(() => {
+		const rootNode = getRootNode();
 		// re-run when the ID changes.
 		id.current;
 		// re-run when the deps changes.
-		dependencies;
-		rootNode;
+		deps();
 		return untrack(() => {
 			const node = rootNode?.getElementById(id.current);
 			if (node) {
