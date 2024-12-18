@@ -1,6 +1,7 @@
-import { untrack } from "svelte";
 import type { WritableBox } from "$lib/box/box.svelte.js";
 import type { Box, Getter } from "$lib/types.js";
+import { watch } from "runed";
+import { onDestroyEffect } from "./on-destroy-effect.svelte.js";
 
 type UseRefByIdProps = {
 	/**
@@ -39,30 +40,19 @@ export function useRefById({
 	id,
 	ref,
 	deps = () => true,
-	onRefChange = () => {},
-	getRootNode = () => (typeof document !== "undefined" ? document : undefined)
+	onRefChange,
+	getRootNode
 }: UseRefByIdProps) {
-	$effect(() => {
-		const rootNode = getRootNode();
-		// re-run when the ID changes.
-		id.current;
-		// re-run when the deps changes.
-		deps();
-		return untrack(() => {
-			const node = rootNode?.getElementById(id.current);
-			if (node) {
-				ref.current = node;
-			} else {
-				ref.current = null;
-			}
-			onRefChange(ref.current);
-		});
+	watch([() => id.current, deps], ([_id]) => {
+		const rootNode = getRootNode?.() ?? document;
+		const node = rootNode?.getElementById(_id);
+		if (node) ref.current = node;
+		else ref.current = null;
+		onRefChange?.(ref.current);
 	});
 
-	$effect(() => {
-		return () => {
-			ref.current = null;
-			onRefChange(null);
-		};
+	onDestroyEffect(() => {
+		ref.current = null;
+		onRefChange?.(null);
 	});
 }
