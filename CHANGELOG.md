@@ -1,5 +1,11 @@
 # svelte-toolbelt
 
+## 0.6.0
+
+### Minor Changes
+
+- add `env` utils ([#36](https://github.com/huntabyte/svelte-toolbelt/pull/36))
+
 ## 0.5.0
 
 ### Minor Changes
