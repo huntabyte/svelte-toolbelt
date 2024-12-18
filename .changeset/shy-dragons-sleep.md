@@ -1,5 +1,5 @@
 ---
-"svelte-toolbelt": patch
+"svelte-toolbelt": minor
 ---
 
 `EnvironmentState` utils
