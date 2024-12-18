@@ -1,5 +1,11 @@
 # svelte-toolbelt
 
+## 0.7.0
+
+### Minor Changes
+
+- `EnvironmentState` utils ([#40](https://github.com/huntabyte/svelte-toolbelt/pull/40))
+
 ## 0.6.1
 
 ### Patch Changes
