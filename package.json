@@ -63,6 +63,7 @@
 	},
 	"dependencies": {
 		"clsx": "^2.1.1",
+		"runed": "^0.20.0",
 		"style-to-object": "^1.0.8"
 	},
 	"svelte": "./dist/index.js",

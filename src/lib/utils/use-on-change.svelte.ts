@@ -1,5 +1,5 @@
-import { untrack } from "svelte";
 import type { Getter } from "$lib/types.js";
+import { watch } from "runed";
 
 /**
  * Simple helper function to sync a read-only dependency with writable state. This only syncs
@@ -12,9 +12,5 @@ import type { Getter } from "$lib/types.js";
  * with the dependency.
  */
 export function useOnChange<T>(getDep: Getter<T>, onChange: (value: T) => void) {
-	const dep = $derived(getDep());
-	$effect(() => {
-		dep;
-		untrack(() => onChange(dep));
-	});
+	watch(getDep, onChange);
 }

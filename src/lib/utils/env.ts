@@ -30,3 +30,35 @@ export function getActiveElement(rootNode: Document | ShadowRoot): HTMLElement |
 
 	return activeElement;
 }
+
+export type EnvironmentStateProps = {
+	getRootNode?: () => Document | ShadowRoot | Node;
+};
+
+export class EnvironmentState {
+	constructor(readonly props: EnvironmentStateProps = {}) {}
+
+	getRootNode() {
+		return (this.props?.getRootNode?.() ?? document) as Document | ShadowRoot;
+	}
+
+	getDoc() {
+		return getDocument(this.getRootNode());
+	}
+
+	getWin() {
+		return this.getDoc().defaultView ?? window;
+	}
+
+	getActiveElement() {
+		return getActiveElement(this.getRootNode());
+	}
+
+	isActiveElement(node: HTMLElement | null | undefined) {
+		return node === this.getActiveElement();
+	}
+
+	getById<T extends Element = HTMLElement>(id: string) {
+		return this.getRootNode().getElementById(id) as T | null;
+	}
+}
