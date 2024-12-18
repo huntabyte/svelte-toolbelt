@@ -122,7 +122,7 @@ describe("box.readonly", () => {
 		const readonlyCount = box.readonly(count);
 
 		function setReadOnlyCount() {
-			// eslint-disable-next-line ts/no-explicit-any
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
 			(readonlyCount as any).current = 1;
 		}
 

@@ -1,7 +1,7 @@
 /**
  * Modified from https://github.com/adobe/react-spectrum/blob/main/packages/%40react-aria/utils/src/mergeProps.ts (see NOTICE.txt for source)
  */
-import { type ClassValue, clsx } from "clsx";
+import { clsx } from "clsx";
 import type { EventCallback } from "./events.js";
 import { composeHandlers } from "./compose-handlers.js";
 import { cssToStyleObj } from "./css-to-style-obj.js";
@@ -20,7 +20,7 @@ type TupleTypes<T> = { [P in keyof T]: T[P] } extends { [key: number]: infer V }
 	: never;
 
 type NullToObject<T> = T extends null | undefined ? {} : T;
-// eslint-disable-next-line ts/no-explicit-any
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends (k: infer I) => void
 	? I
 	: never;
