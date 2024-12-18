@@ -1,5 +1,11 @@
 # svelte-toolbelt
 
+## 0.6.1
+
+### Patch Changes
+
+- adjust `useRefById` internals ([#38](https://github.com/huntabyte/svelte-toolbelt/pull/38))
+
 ## 0.6.0
 
 ### Minor Changes
