@@ -1,5 +1,11 @@
 # svelte-toolbelt
 
+## 0.7.1
+
+### Patch Changes
+
+- update dependencies ([#42](https://github.com/huntabyte/svelte-toolbelt/pull/42))
+
 ## 0.7.0
 
 ### Minor Changes
