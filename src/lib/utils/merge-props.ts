@@ -9,6 +9,7 @@ import { isClassValue } from "./is.js";
 import { executeCallbacks } from "$lib/utils/execute-callbacks.js";
 import { styleToString } from "$lib/utils/style.js";
 import type { StyleProperties } from "$lib/types.js";
+import { EVENT_LIST_SET } from "./event-list.js";
 
 type Props = Record<string, unknown>;
 
@@ -26,9 +27,9 @@ type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends (
 	: never;
 
 function isEventHandler(key: string): boolean {
-	// we check if the 3rd character is uppercase to avoid merging our own
-	// custom callbacks like `onValueChange` and strictly merge native event handlers
-	return key.length > 2 && key.startsWith("on") && key[2] === key[2]?.toLowerCase();
+	// minimum valid event handler is `oncut` which is 5 characters long
+	// so we can bail before even checking the set of valid events
+	return key.length > 4 && EVENT_LIST_SET.has(key);
 }
 
 /**
@@ -57,7 +58,7 @@ export function mergeProps<T extends PropsArg[]>(
 			const bIsFunction = typeof b === "function";
 
 			// compose event handlers
-			if (aIsFunction && typeof bIsFunction && isEventHandler(key)) {
+			if (aIsFunction && bIsFunction && isEventHandler(key)) {
 				// handle merging of event handlers
 				const aHandler = a as EventCallback;
 				const bHandler = b as EventCallback;
