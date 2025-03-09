@@ -27,8 +27,6 @@ type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends (
 	: never;
 
 function isEventHandler(key: string): boolean {
-	// minimum valid event handler is `oncut` which is 5 characters long
-	// so we can bail before even checking the set of valid events
 	return EVENT_LIST_SET.has(key);
 }
 
