@@ -421,3 +421,29 @@ A simple helper function to react to changes to reactive state. This is useful f
 	);
 </script>
 ```
+
+### `attachRef`
+
+Creates a Svelte attachment that attaches a DOM element to a ref.
+
+```svelte
+<script lang="ts">
+	import { attachRef } from "svelte-toolbelt";
+
+	const ref = box<Element | null>(null);
+</script>
+
+<div {...attachRef(ref)}>Content</div>
+```
+
+or
+
+```svelte
+<script lang="ts">
+	import { attachRef } from "svelte-toolbelt";
+
+	let ref = $state<HTMLElement | null>(null);
+</script>
+
+<div {...attachRef((node) => (ref = node))}>Content</div>
+```

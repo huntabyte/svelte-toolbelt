@@ -16,3 +16,4 @@ export * from "./utils/style-to-css.js";
 export * from "./utils/on-mount-effect.svelte.js";
 export * from "./utils/use-on-change.svelte.js";
 export * from "./utils/env.js";
+export * from "./utils/attach-ref.js";

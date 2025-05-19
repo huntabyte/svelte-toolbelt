@@ -9,6 +9,7 @@ import { isClassValue } from "./is.js";
 import { executeCallbacks } from "$lib/utils/execute-callbacks.js";
 import { styleToString } from "$lib/utils/style.js";
 import type { StyleProperties } from "$lib/types.js";
+import { EVENT_LIST_SET } from "./event-list.js";
 
 type Props = Record<string, unknown>;
 
@@ -26,9 +27,7 @@ type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends (
 	: never;
 
 function isEventHandler(key: string): boolean {
-	// we check if the 3rd character is uppercase to avoid merging our own
-	// custom callbacks like `onValueChange` and strictly merge native event handlers
-	return key.length > 2 && key.startsWith("on") && key[2] === key[2]?.toLowerCase();
+	return EVENT_LIST_SET.has(key);
 }
 
 /**
@@ -49,9 +48,12 @@ export function mergeProps<T extends PropsArg[]>(
 
 	for (let i = 1; i < args.length; i++) {
 		const props = args[i];
-		for (const key in props) {
+		if (!props) continue;
+
+		// Handle string keys
+		for (const key of Object.keys(props as object)) {
 			const a = result[key];
-			const b = props[key];
+			const b = (props as Record<string, unknown>)[key];
 
 			const aIsFunction = typeof a === "function";
 			const bIsFunction = typeof b === "function";
@@ -111,6 +113,13 @@ export function mergeProps<T extends PropsArg[]>(
 				// override other values
 				result[key] = b !== undefined ? b : a;
 			}
+		}
+		// handle symbol keys (mostly for `Attachments`)
+		for (const key of Object.getOwnPropertySymbols(props as object)) {
+			const a = (result as Record<symbol, unknown>)[key];
+			const b = (props as Record<symbol, unknown>)[key];
+			// for matching symbols, we just override
+			(result as Record<symbol, unknown>)[key] = b !== undefined ? b : a;
 		}
 	}
 
