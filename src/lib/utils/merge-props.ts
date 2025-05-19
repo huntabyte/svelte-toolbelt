@@ -9,6 +9,7 @@ import { isClassValue } from "./is.js";
 import { executeCallbacks } from "$lib/utils/execute-callbacks.js";
 import { styleToString } from "$lib/utils/style.js";
 import type { StyleProperties } from "$lib/types.js";
+import { EVENT_LIST_SET } from "./event-list.js";
 
 type Props = Record<string, unknown>;
 
@@ -26,9 +27,7 @@ type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends (
 	: never;
 
 function isEventHandler(key: string): boolean {
-	// we check if the 3rd character is uppercase to avoid merging our own
-	// custom callbacks like `onValueChange` and strictly merge native event handlers
-	return key.length > 2 && key.startsWith("on") && key[2] === key[2]?.toLowerCase();
+	return EVENT_LIST_SET.has(key);
 }
 
 /**
