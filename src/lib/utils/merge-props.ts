@@ -49,9 +49,12 @@ export function mergeProps<T extends PropsArg[]>(
 
 	for (let i = 1; i < args.length; i++) {
 		const props = args[i];
-		for (const key in props) {
+		if (!props) continue;
+
+		// Handle string keys
+		for (const key of Object.keys(props as object)) {
 			const a = result[key];
-			const b = props[key];
+			const b = (props as Record<string, unknown>)[key];
 
 			const aIsFunction = typeof a === "function";
 			const bIsFunction = typeof b === "function";
@@ -111,6 +114,13 @@ export function mergeProps<T extends PropsArg[]>(
 				// override other values
 				result[key] = b !== undefined ? b : a;
 			}
+		}
+		// handle symbol keys (mostly for `Attachments`)
+		for (const key of Object.getOwnPropertySymbols(props as object)) {
+			const a = (result as Record<symbol, unknown>)[key];
+			const b = (props as Record<symbol, unknown>)[key];
+			// for matching symbols, we just override
+			(result as Record<symbol, unknown>)[key] = b !== undefined ? b : a;
 		}
 	}
 
