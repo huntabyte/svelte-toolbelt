@@ -1,5 +1,11 @@
 # svelte-toolbelt
 
+## 0.8.1
+
+### Patch Changes
+
+- improve: add optional change handler arg to `attachRef` ([#49](https://github.com/huntabyte/svelte-toolbelt/pull/49))
+
 ## 0.8.0
 
 ### Minor Changes
