@@ -8,6 +8,7 @@ type RefSetter<T> = (v: T) => void;
  * The ref can be either a WritableBox or a callback function.
  *
  * @param ref - Either a WritableBox to store the element in, or a callback function that receives the element
+ * @param onChange - Optional callback that fires when the ref changes
  * @returns An object with a spreadable attachment key that should be spread onto the element
  *
  * @example
@@ -18,18 +19,31 @@ type RefSetter<T> = (v: T) => void;
  * @example
  * // Using with callback
  * <div {...attachRef((node) => myNode = node)}>Content</div>
+ *
+ * @example
+ * // Using with onChange
+ * <div {...attachRef(ref, (node) => console.log(node))}>Content</div>
  */
 export function attachRef<T extends EventTarget = Element>(
-	ref: WritableBox<T | null> | RefSetter<T | null>
+	ref: WritableBox<T | null> | RefSetter<T | null>,
+	onChange?: (v: T | null) => void
 ) {
 	return {
 		[createAttachmentKey()]: (node: T) => {
 			if (box.isBox(ref)) {
 				ref.current = node;
-				return () => (ref.current = null);
+				onChange?.(node);
+				return () => {
+					ref.current = null;
+					onChange?.(null);
+				};
 			}
 			ref(node);
-			return () => ref(null);
+			onChange?.(node);
+			return () => {
+				ref(null);
+				onChange?.(null);
+			};
 		}
 	};
 }
