@@ -1,5 +1,13 @@
 # svelte-toolbelt
 
+## 0.8.0
+
+### Minor Changes
+
+- chore: update minimum svelte peer dep to attachments version ([#47](https://github.com/huntabyte/svelte-toolbelt/pull/47))
+
+- feat: `attachRef` attachment helper to replace `useRefById` ([#47](https://github.com/huntabyte/svelte-toolbelt/pull/47))
+
 ## 0.7.1
 
 ### Patch Changes
