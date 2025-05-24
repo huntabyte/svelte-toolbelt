@@ -1,5 +1,11 @@
 # svelte-toolbelt
 
+## 0.8.2
+
+### Patch Changes
+
+- fix(attachRef): untrack `onChange` handler ([#51](https://github.com/huntabyte/svelte-toolbelt/pull/51))
+
 ## 0.8.1
 
 ### Patch Changes
