@@ -15,5 +15,6 @@ export * from "./utils/after-tick.js";
 export * from "./utils/style-to-css.js";
 export * from "./utils/on-mount-effect.svelte.js";
 export * from "./utils/use-on-change.svelte.js";
-export * from "./utils/env.js";
+export * from "./utils/dom.js";
+export * from "./utils/dom-context.svelte.js";
 export * from "./utils/attach-ref.js";

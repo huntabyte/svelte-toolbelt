@@ -27,36 +27,3 @@ export function isClassValue(value: unknown): value is ClassValue {
 
 	return false;
 }
-
-const ELEMENT_NODE: typeof Node.ELEMENT_NODE = 1;
-const DOCUMENT_NODE: typeof Node.DOCUMENT_NODE = 9;
-const DOCUMENT_FRAGMENT_NODE: typeof Node.DOCUMENT_FRAGMENT_NODE = 11;
-
-export function isHTMLElement(v: unknown): v is HTMLElement {
-	return isObject(v) && v.nodeType === ELEMENT_NODE && typeof v.nodeName === "string";
-}
-
-export function isDocument(v: unknown): v is Document {
-	return isObject(v) && v.nodeType === DOCUMENT_NODE;
-}
-
-export function isWindow(v: unknown): v is Window {
-	return isObject(v) && v === v.window;
-}
-
-export function getNodeName(node: Node | Window): string {
-	if (isHTMLElement(node)) return node.localName || "";
-	return "#document";
-}
-
-export function isRootElement(node: Node): boolean {
-	return ["html", "body", "#document"].includes(getNodeName(node));
-}
-
-export function isNode(v: unknown): v is Node {
-	return isObject(v) && v.nodeType !== undefined;
-}
-
-export function isShadowRoot(v: unknown): v is ShadowRoot {
-	return isNode(v) && v.nodeType === DOCUMENT_FRAGMENT_NODE && "host" in v;
-}
