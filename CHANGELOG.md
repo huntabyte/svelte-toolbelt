@@ -1,5 +1,11 @@
 # svelte-toolbelt
 
+## 0.9.0
+
+### Minor Changes
+
+- feat: dom-context utils ([#53](https://github.com/huntabyte/svelte-toolbelt/pull/53))
+
 ## 0.8.2
 
 ### Patch Changes
