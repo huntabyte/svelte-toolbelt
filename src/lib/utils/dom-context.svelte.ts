@@ -49,4 +49,12 @@ export class DOMContext {
 		if (!this.root) return [] as unknown as NodeListOf<Element>;
 		return this.root.querySelectorAll(selector);
 	};
+
+	setTimeout = (callback: () => void, delay: number) => {
+		return this.getWindow().setTimeout(callback, delay);
+	};
+
+	clearTimeout = (timeoutId: number) => {
+		return this.getWindow().clearTimeout(timeoutId);
+	};
 }
