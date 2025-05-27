@@ -1,5 +1,11 @@
 # svelte-toolbelt
 
+## 0.9.1
+
+### Patch Changes
+
+- feat: setTimeout/clearTimeout on DOMContext ([#55](https://github.com/huntabyte/svelte-toolbelt/pull/55))
+
 ## 0.9.0
 
 ### Minor Changes
