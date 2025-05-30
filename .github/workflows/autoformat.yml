@@ -86,7 +86,6 @@ jobs:
         uses: actions/checkout@v4
         with:
           ref: ${{ steps.get-pr.outputs.head-ref }}
-          fetch-depth: 0
 
       - uses: pnpm/action-setup@v4
         if: steps.check-permission.outputs.should-continue == 'true'
@@ -99,7 +98,7 @@ jobs:
 
       - name: Install dependencies
         if: steps.check-permission.outputs.should-continue == 'true'
-        run: pnpm install --frozen-lockfile --prefer-offline
+        run: pnpm install
 
       - name: Run formatter
         if: steps.check-permission.outputs.should-continue == 'true'
