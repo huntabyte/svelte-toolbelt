@@ -1,5 +1,11 @@
 # svelte-toolbelt
 
+## 0.9.2
+
+### Patch Changes
+
+- fix: `attachRef` setting reference values to null when node is still in DOM ([#63](https://github.com/huntabyte/svelte-toolbelt/pull/63))
+
 ## 0.9.1
 
 ### Patch Changes
