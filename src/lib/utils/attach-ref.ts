@@ -35,6 +35,8 @@ export function attachRef<T extends EventTarget = Element>(
 				ref.current = node;
 				untrack(() => onChange?.(node));
 				return () => {
+					// we don't want to detach the node if it's still connected
+					if ("isConnected" in node && node.isConnected) return;
 					ref.current = null;
 					onChange?.(null);
 				};
@@ -42,6 +44,8 @@ export function attachRef<T extends EventTarget = Element>(
 			ref(node);
 			untrack(() => onChange?.(node));
 			return () => {
+				// we don't want to detach the node if it's still connected
+				if ("isConnected" in node && node.isConnected) return;
 				ref(null);
 				onChange?.(null);
 			};
