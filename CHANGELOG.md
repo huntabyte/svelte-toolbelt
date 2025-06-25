@@ -1,5 +1,13 @@
 # svelte-toolbelt
 
+## 0.9.3
+
+### Patch Changes
+
+- chore: update runed ([#67](https://github.com/huntabyte/svelte-toolbelt/pull/67))
+
+- fix: add `defaults` export ([#65](https://github.com/huntabyte/svelte-toolbelt/pull/65))
+
 ## 0.9.2
 
 ### Patch Changes
