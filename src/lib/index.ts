@@ -19,3 +19,4 @@ export * from "./utils/use-on-change.svelte.js";
 export * from "./utils/dom.js";
 export * from "./utils/dom-context.svelte.js";
 export * from "./utils/attach-ref.js";
+export * from "./utils/sr-only-styles.js";
