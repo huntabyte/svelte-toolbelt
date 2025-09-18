@@ -1,5 +1,11 @@
 # svelte-toolbelt
 
+## 0.10.2
+
+### Patch Changes
+
+- fix: side effects ([#72](https://github.com/huntabyte/svelte-toolbelt/pull/72))
+
 ## 0.10.1
 
 ### Patch Changes
