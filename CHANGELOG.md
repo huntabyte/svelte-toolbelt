@@ -1,5 +1,11 @@
 # svelte-toolbelt
 
+## 0.10.1
+
+### Patch Changes
+
+- perf: export sr-only styles from separate file ([#70](https://github.com/huntabyte/svelte-toolbelt/pull/70))
+
 ## 0.10.0
 
 ### Minor Changes
