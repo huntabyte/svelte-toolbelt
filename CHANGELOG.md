@@ -1,5 +1,11 @@
 # svelte-toolbelt
 
+## 0.10.0
+
+### Minor Changes
+
+- expose individual box utils as standalone functions ([#68](https://github.com/huntabyte/svelte-toolbelt/pull/68))
+
 ## 0.9.3
 
 ### Patch Changes
