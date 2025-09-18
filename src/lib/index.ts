@@ -1,4 +1,5 @@
 export * from "./box/box.svelte.js";
+export * from "./box/box-extras.svelte.js";
 export * from "./unbox/unbox.svelte.js";
 export * from "./types.js";
 export * from "./utils/compose-handlers.js";

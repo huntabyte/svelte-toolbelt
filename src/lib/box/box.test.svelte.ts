@@ -1,5 +1,6 @@
 import { describe, expect, expectTypeOf, test } from "vitest";
-import { type ReadableBox, type WritableBox, box } from "./box.svelte.js";
+import { box } from "./box.svelte.js";
+import { type ReadableBox, type WritableBox } from "./box-extras.svelte.js";
 import type { MaybeBoxOrGetter } from "$lib/types.js";
 
 describe("box", () => {
@@ -145,53 +146,53 @@ describe("box.readonly", () => {
 describe("box types", () => {
 	test("box without initial value", () => {
 		const count = box<number>();
-		expectTypeOf(count).toMatchTypeOf<WritableBox<number | undefined>>();
-		expectTypeOf(count).toMatchTypeOf<ReadableBox<number | undefined>>();
+		expectTypeOf(count).toExtend<WritableBox<number | undefined>>();
+		expectTypeOf(count).toExtend<ReadableBox<number | undefined>>();
 	});
 
 	test("box with initial value", () => {
 		const count = box(0);
-		expectTypeOf(count).toMatchTypeOf<WritableBox<number>>();
-		expectTypeOf(count).toMatchTypeOf<ReadableBox<number>>();
+		expectTypeOf(count).toExtend<WritableBox<number>>();
+		expectTypeOf(count).toExtend<ReadableBox<number>>();
 	});
 
 	test("box from writable box", () => {
 		const count = box.from(box(0));
-		expectTypeOf(count).toMatchTypeOf<WritableBox<number>>();
+		expectTypeOf(count).toExtend<WritableBox<number>>();
 	});
 
 	test("box from readable box", () => {
 		const count = box.from(box.with(() => 0));
-		expectTypeOf(count).toMatchTypeOf<ReadableBox<number>>();
+		expectTypeOf(count).toMatchObjectType<ReadableBox<number>>();
 		expectTypeOf(count).not.toMatchTypeOf<WritableBox<number>>();
 	});
 
 	test("box from box or value", () => {
 		const count = 0 as number | ReadableBox<number>;
 		const count2 = box.from(count);
-		expectTypeOf(count2).toMatchTypeOf<ReadableBox<number>>();
+		expectTypeOf(count2).toMatchObjectType<ReadableBox<number>>();
 	});
 
 	test("box from maybe box or getter", () => {
 		const count = 0 as MaybeBoxOrGetter<number>;
 		const count2 = box.from(count);
-		expectTypeOf(count2).toMatchTypeOf<ReadableBox<number>>();
+		expectTypeOf(count2).toExtend<ReadableBox<number>>();
 	});
 
 	test("box.isWritableBox = true should allow box to be settable", () => {
 		const count = box(0) as WritableBox<number> | ReadableBox<number>;
-		expectTypeOf(count).toMatchTypeOf<ReadableBox<number>>();
+		expectTypeOf(count).toExtend<ReadableBox<number>>();
 		expect(box.isWritableBox(count)).toBe(true);
 
 		if (box.isWritableBox(count)) {
-			expectTypeOf(count).toMatchTypeOf<WritableBox<number>>();
+			expectTypeOf(count).toExtend<WritableBox<number>>();
 		}
 	});
 
 	test("box.readonly should return a non-settable box", () => {
 		const count = box(0);
 		const readonlyCount = box.readonly(count);
-		expectTypeOf(readonlyCount).toMatchTypeOf<ReadableBox<number>>();
+		expectTypeOf(readonlyCount).toExtend<ReadableBox<number>>();
 		expectTypeOf(readonlyCount).not.toMatchTypeOf<WritableBox<number>>();
 	});
 });
