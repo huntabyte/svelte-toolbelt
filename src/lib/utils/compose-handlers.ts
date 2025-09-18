@@ -1,5 +1,5 @@
 import type { EventCallback } from "./events.js";
-import type { ReadableBox } from "$lib/box/box.svelte.js";
+import type { ReadableBox } from "$lib/box/box-extras.svelte.js";
 
 /**
  * Composes event handlers into a single function that can be called with an event.

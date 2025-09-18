@@ -1,4 +1,4 @@
-import type { WritableBox } from "$lib/box/box.svelte.js";
+import type { WritableBox } from "$lib/box/box-extras.svelte.js";
 import type { Box, Getter } from "$lib/types.js";
 import { watch } from "runed";
 import { onDestroyEffect } from "./on-destroy-effect.svelte.js";

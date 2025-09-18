@@ -1,5 +1,6 @@
 import { describe, expect, expectTypeOf, test } from "vitest";
-import { type ReadableBox, type WritableBox, box } from "./box.svelte.js";
+import { box } from "./box.svelte.js";
+import { type ReadableBox, type WritableBox } from "./box-extras.svelte.js";
 import type { MaybeBoxOrGetter } from "$lib/types.js";
 
 describe("box", () => {

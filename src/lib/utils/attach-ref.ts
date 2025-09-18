@@ -1,5 +1,5 @@
 import { untrack } from "svelte";
-import { box, type WritableBox } from "../box/box.svelte.js";
+import { isBox, type WritableBox } from "../box/box-extras.svelte.js";
 import { createAttachmentKey } from "svelte/attachments";
 
 type RefSetter<T> = (v: T) => void;
@@ -31,7 +31,7 @@ export function attachRef<T extends EventTarget = Element>(
 ) {
 	return {
 		[createAttachmentKey()]: (node: T) => {
-			if (box.isBox(ref)) {
+			if (isBox(ref)) {
 				ref.current = node;
 				untrack(() => onChange?.(node));
 				return () => {
