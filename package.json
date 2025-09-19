@@ -1,6 +1,6 @@
 {
 	"name": "svelte-toolbelt",
-	"version": "0.10.4",
+	"version": "0.10.5",
 	"scripts": {
 		"dev": "pnpm --reporter append-only --color \"/dev:/\"",
 		"dev:svelte": "vite dev",
