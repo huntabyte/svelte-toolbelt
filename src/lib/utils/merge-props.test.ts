@@ -123,11 +123,15 @@ describe("mergeProps", () => {
 	it("should handle the hidden attribute", () => {
 		const props1 = { hidden: true };
 		const props2 = { hidden: false };
+		const props3 = { hidden: "until-found" };
 		const result = mergeProps(props1, props2);
 		expect(result).toEqual({ hidden: undefined });
 
 		const result2 = mergeProps(props2, props1);
 		expect(result2).toEqual({ hidden: true });
+
+		const result3 = mergeProps(props1, props3);
+		expect(result3).toEqual({ hidden: "until-found" });
 	});
 
 	it("should handle the disabled attribute", () => {
