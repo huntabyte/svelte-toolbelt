@@ -1,5 +1,11 @@
 # svelte-toolbelt
 
+## 0.10.5
+
+### Patch Changes
+
+- change exports strategy ([#78](https://github.com/huntabyte/svelte-toolbelt/pull/78))
+
 ## 0.10.4
 
 ### Patch Changes
