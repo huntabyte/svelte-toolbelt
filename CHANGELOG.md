@@ -1,5 +1,11 @@
 # svelte-toolbelt
 
+## 0.10.4
+
+### Patch Changes
+
+- fix(mergeProps): allow other `hidden` attributes like `until-found` ([#76](https://github.com/huntabyte/svelte-toolbelt/pull/76))
+
 ## 0.10.3
 
 ### Patch Changes
