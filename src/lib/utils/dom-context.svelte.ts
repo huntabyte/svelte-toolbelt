@@ -1,4 +1,4 @@
-import { box } from "$lib/box/box.svelte.js";
+import { boxWith } from "$lib/box/box-extras.svelte.js";
 import type { Box } from "$lib/types.js";
 import { getActiveElement, getDocument } from "./dom.js";
 
@@ -14,7 +14,7 @@ export class DOMContext {
 
 	constructor(element: Box<HTMLElement | null> | ElementGetter) {
 		if (typeof element === "function") {
-			this.element = box.with(element);
+			this.element = boxWith(element);
 		} else {
 			this.element = element;
 		}
