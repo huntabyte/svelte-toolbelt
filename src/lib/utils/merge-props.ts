@@ -129,13 +129,13 @@ export function mergeProps<T extends PropsArg[]>(
 	}
 
 	// handle weird svelte bug where `hidden` is not removed when set to `false`
-	if (result.hidden !== true) {
+	if (result.hidden === false) {
 		result.hidden = undefined;
 		delete result.hidden;
 	}
 
 	// handle weird svelte bug where `disabled` is not removed when set to `false`
-	if (result.disabled !== true) {
+	if (result.disabled === false) {
 		result.disabled = undefined;
 		delete result.disabled;
 	}
