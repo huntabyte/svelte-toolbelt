@@ -1,5 +1,11 @@
 # svelte-toolbelt
 
+## 0.10.3
+
+### Patch Changes
+
+- perf: optimize ([#74](https://github.com/huntabyte/svelte-toolbelt/pull/74))
+
 ## 0.10.2
 
 ### Patch Changes
