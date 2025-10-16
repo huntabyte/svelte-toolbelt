@@ -1,5 +1,11 @@
 # svelte-toolbelt
 
+## 0.10.6
+
+### Patch Changes
+
+- chore: update runed ([#80](https://github.com/huntabyte/svelte-toolbelt/pull/80))
+
 ## 0.10.5
 
 ### Patch Changes
