@@ -20,7 +20,8 @@ export function styleToCSS(styleObj: object) {
 	if (!styleObj || typeof styleObj !== "object" || Array.isArray(styleObj)) {
 		throw new TypeError(`expected an argument of type object, but got ${typeof styleObj}`);
 	}
-	return Object.keys(styleObj)
-		.map((property) => `${camelToKebab(property)}: ${styleObj[property as keyof typeof styleObj]};`)
+	return Object.entries(styleObj)
+		.filter(([, value]) => value !== undefined && value !== null)
+		.map(([property, value]) => `${camelToKebab(property)}: ${value};`)
 		.join("\n");
 }
