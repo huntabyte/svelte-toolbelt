@@ -1,6 +1,10 @@
 {
 	"name": "svelte-toolbelt",
 	"version": "0.10.7",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/huntabyte/svelte-toolbelt.git"
+	},
 	"scripts": {
 		"dev": "pnpm --reporter append-only --color \"/dev:/\"",
 		"dev:svelte": "vite dev",
