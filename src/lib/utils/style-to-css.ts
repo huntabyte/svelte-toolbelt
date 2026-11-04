@@ -20,7 +20,12 @@ export function styleToCSS(styleObj: object) {
 	if (!styleObj || typeof styleObj !== "object" || Array.isArray(styleObj)) {
 		throw new TypeError(`expected an argument of type object, but got ${typeof styleObj}`);
 	}
-	return Object.keys(styleObj)
-		.map((property) => `${camelToKebab(property)}: ${styleObj[property as keyof typeof styleObj]};`)
-		.join("\n");
+	let css = "";
+	for (const property of Object.keys(styleObj)) {
+		const value = styleObj[property as keyof typeof styleObj];
+		// nullish and empty values would serialize to invalid declarations (`color: undefined;`, `color: ;`)
+		if (value === undefined || value === null || value === "") continue;
+		css += `${css ? "\n" : ""}${camelToKebab(property)}: ${value};`;
+	}
+	return css;
 }
