@@ -59,7 +59,7 @@ export function mergeProps<T extends PropsArg[]>(
 			const bIsFunction = typeof b === "function";
 
 			// compose event handlers
-			if (aIsFunction && typeof bIsFunction && isEventHandler(key)) {
+			if (aIsFunction && bIsFunction && isEventHandler(key)) {
 				// handle merging of event handlers
 				const aHandler = a as EventCallback;
 				const bHandler = b as EventCallback;
