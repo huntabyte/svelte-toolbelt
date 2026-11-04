@@ -14,7 +14,19 @@ function createParser(matcher: string | RegExp, replacer: (match: string) => str
 	};
 }
 
-const camelToKebab = createParser(/[A-Z]/, (match) => `-${match.toLowerCase()}`);
+const camelToKebabUncached = createParser(/[A-Z]/, (match) => `-${match.toLowerCase()}`);
+
+// ponytail: cleared when full; bounded because custom property names can be dynamic.
+const kebabCache = new Map<string, string>();
+function camelToKebab(property: string): string {
+	let kebab = kebabCache.get(property);
+	if (kebab === undefined) {
+		kebab = camelToKebabUncached(property);
+		if (kebabCache.size >= 1000) kebabCache.clear();
+		kebabCache.set(property, kebab);
+	}
+	return kebab;
+}
 
 export function styleToCSS(styleObj: object) {
 	if (!styleObj || typeof styleObj !== "object" || Array.isArray(styleObj)) {

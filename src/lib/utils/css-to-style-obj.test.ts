@@ -43,4 +43,29 @@ describe("cssToStyleObj", () => {
 		);
 		expect(result).toEqual({ WebkitTransform: "rotate(45deg)", MozTransform: "rotate(45deg)" });
 	});
+
+	// Expected values are what style-to-object produces; the fast scanner must match or defer to it.
+	it.each([
+		[
+			"transform: translate(120px, 340px) rotate(3deg); --x: calc(100% - var(--y, 4px));",
+			{ transform: "translate(120px, 340px) rotate(3deg)", "--x": "calc(100% - var(--y, 4px))" }
+		],
+		[
+			"background-image: url(data:image/png;base64,AAAA); color: red",
+			{ backgroundImage: "url(data:image/png;base64,AAAA)", color: "red" }
+		],
+		[
+			"font-family: 'Inter; Var', sans-serif;  ;  margin : 0 auto ;",
+			{ fontFamily: "'Inter; Var', sans-serif", margin: "0 auto" }
+		],
+		["color: red !important;; ;opacity: 0.5", { color: "red !important", opacity: "0.5" }],
+		["; color: red", {}],
+		["color: red; @media: x; opacity: 1", { color: "red" }]
+	])("should parse %j the same as the full parser", (css, expected) => {
+		expect(cssToStyleObj(css)).toEqual(expected);
+	});
+
+	it("should throw on a declaration missing ':' like the full parser", () => {
+		expect(() => cssToStyleObj("color: red; oops")).toThrow("property missing ':'");
+	});
 });
