@@ -506,4 +506,11 @@ describe("mergeProps", () => {
 			"margin: 10px; padding: 5px 10px; border: 1px solid black; background: red; margin-top: 20px; padding-left: 15px; border-color: blue; background-color: green;"
 		);
 	});
+
+	it("should not serialize nullish or empty style values", () => {
+		const props1 = { style: { color: "red", width: "10px" } };
+		const props2 = { style: { width: undefined, height: null, margin: "" } };
+		const result = mergeProps(props1, props2);
+		expect(result.style).toEqual("color: red;");
+	});
 });

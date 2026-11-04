@@ -2,4 +2,4 @@
 "svelte-toolbelt": patch
 ---
 
-fix: omit nullish values in styleToCSS
+fix: omit nullish and empty values in styleToCSS
