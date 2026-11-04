@@ -1,5 +1,15 @@
 # svelte-toolbelt
 
+## 0.10.7
+
+### Patch Changes
+
+- fix: omit nullish and empty values in styleToCSS ([#83](https://github.com/huntabyte/svelte-toolbelt/pull/83))
+
+- perf: parse simple inline style strings without `style-to-object` and cache property-name conversions, speeding up `mergeProps` style merging, `cssToStyleObj` and `styleToString` ([#87](https://github.com/huntabyte/svelte-toolbelt/pull/87))
+
+- fix(mergeProps): keep an event handler as-is instead of wrapping it when a later props object passes a non-function value (e.g. `onclick: undefined`) ([#85](https://github.com/huntabyte/svelte-toolbelt/pull/85))
+
 ## 0.10.6
 
 ### Patch Changes
