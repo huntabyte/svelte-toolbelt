@@ -29,6 +29,24 @@ describe("mergeProps", () => {
 		expect(handler2).toHaveBeenCalled();
 	});
 
+	it("should keep an event handler as-is when the later value is undefined", () => {
+		const handler = vi.fn();
+		const forwarded: { onclick?: () => void } = { onclick: undefined };
+		const result = mergeProps({ onclick: handler }, forwarded);
+		expect(result.onclick).toBe(handler);
+	});
+
+	it("should stop composed event handlers after preventDefault", () => {
+		const handler1 = vi.fn((e: Event) => e.preventDefault());
+		const handler2 = vi.fn();
+		const result = mergeProps({ onclick: handler1 }, { onclick: handler2 });
+
+		result.onclick(new Event("click", { cancelable: true }));
+
+		expect(handler1).toHaveBeenCalled();
+		expect(handler2).not.toHaveBeenCalled();
+	});
+
 	it("should chain non-event handler functions", () => {
 		const handler1 = vi.fn();
 		const handler2 = vi.fn();
