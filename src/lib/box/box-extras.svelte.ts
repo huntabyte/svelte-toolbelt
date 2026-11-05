@@ -43,29 +43,61 @@ function boxWith<T>(getter: () => T): ReadableBox<T>;
  * @see {@link https://runed.dev/docs/functions/box}
  */
 function boxWith<T>(getter: () => T, setter: (v: T) => void): WritableBox<T>;
-function boxWith<T>(getter: () => T, setter?: (v: T) => void) {
-	const derived = $derived.by(getter);
-
-	if (setter) {
-		return {
-			[BoxSymbol]: true,
-			[isWritableSymbol]: true,
-			get current() {
-				return derived;
-			},
-			set current(v: T) {
-				setter(v);
-			}
-		};
-	}
-
-	return {
-		[BoxSymbol]: true,
-		get current() {
-			return getter();
-		}
-	};
+function boxWith<T>(getter: () => T, setter?: (v: T) => void): ReadableBox<T> | WritableBox<T> {
+	// the markers are on the prototype, which TypeScript can't see
+	return (setter
+		? new WritableGetterBox(getter, setter)
+		: new ReadonlyGetterBox(getter)) as unknown as WritableBox<T>;
 }
+
+// Boxes are classes so `current` and the markers live on a shared prototype: creating
+// one is a single allocation with no per-instance closures. bits-ui creates thousands.
+// Getters/setters are called through a local so they don't receive the box as `this`.
+
+class ReadonlyGetterBox<T> {
+	readonly #getter: () => T;
+	constructor(getter: () => T) {
+		this.#getter = getter;
+	}
+	get current() {
+		const getter = this.#getter;
+		return getter();
+	}
+}
+Object.defineProperty(ReadonlyGetterBox.prototype, BoxSymbol, { value: true });
+
+class WritableGetterBox<T> {
+	readonly #getter: () => T;
+	readonly #setter: (v: T) => void;
+	readonly #derived = $derived.by(() => {
+		const getter = this.#getter;
+		return getter();
+	});
+	constructor(getter: () => T, setter: (v: T) => void) {
+		this.#getter = getter;
+		this.#setter = setter;
+	}
+	get current() {
+		return this.#derived;
+	}
+	set current(v: T) {
+		const setter = this.#setter;
+		setter(v);
+	}
+}
+Object.defineProperty(WritableGetterBox.prototype, BoxSymbol, { value: true });
+Object.defineProperty(WritableGetterBox.prototype, isWritableSymbol, { value: true });
+
+class StateBox<T> {
+	current: T;
+	constructor(initialValue: T) {
+		// assigning `$state` in the constructor creates the source directly, rather than
+		// creating an empty one and then running it through the setter
+		this.current = $state(initialValue);
+	}
+}
+Object.defineProperty(StateBox.prototype, BoxSymbol, { value: true });
+Object.defineProperty(StateBox.prototype, isWritableSymbol, { value: true });
 
 /**
  * @returns Whether the value is a Box
@@ -183,12 +215,7 @@ function boxFlatten<R extends Record<string, unknown>>(boxes: R): BoxFlatten<R> 
 function toReadonlyBox<T>(b: ReadableBox<T>): ReadableBox<T> {
 	if (!isWritableBox(b)) return b;
 
-	return {
-		[BoxSymbol]: true,
-		get current() {
-			return b.current;
-		}
-	};
+	return boxWith(() => b.current);
 }
 
 /**
@@ -211,18 +238,7 @@ function simpleBox<T>(): WritableBox<T | undefined>;
  */
 function simpleBox<T>(initialValue: T): WritableBox<T>;
 function simpleBox(initialValue?: unknown) {
-	let current = $state(initialValue);
-
-	return {
-		[BoxSymbol]: true,
-		[isWritableSymbol]: true,
-		get current() {
-			return current as unknown;
-		},
-		set current(v: unknown) {
-			current = v;
-		}
-	};
+	return new StateBox(initialValue);
 }
 
 export { boxWith, isBox, isWritableBox, boxFrom, boxFlatten, toReadonlyBox, simpleBox };
