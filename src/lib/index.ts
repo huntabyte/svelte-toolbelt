@@ -7,6 +7,8 @@ export {
 	boxFlatten,
 	toReadonlyBox,
 	simpleBox,
+	BoxSymbol,
+	isWritableSymbol,
 	type WritableBox,
 	type ReadableBox
 } from "./box/box-extras.svelte.js";

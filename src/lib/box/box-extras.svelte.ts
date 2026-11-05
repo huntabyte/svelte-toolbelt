@@ -1,7 +1,15 @@
 import type { Getter, MaybeBoxOrGetter } from "$lib/types.js";
 import { isFunction, isObject } from "$lib/utils/is.js";
 
+/**
+ * The marker `isBox` checks for. Set it (to `true`) on custom box implementations,
+ * either on the object or its prototype, so they're recognised as boxes.
+ */
 export const BoxSymbol = Symbol("box");
+/**
+ * The marker `isWritableBox` checks for (alongside {@link BoxSymbol}). Set it (to `true`)
+ * on custom writable box implementations, either on the object or its prototype.
+ */
 export const isWritableSymbol = Symbol("is-writable");
 
 export type ReadableBox<T> = {
