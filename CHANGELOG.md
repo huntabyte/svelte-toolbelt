@@ -1,5 +1,11 @@
 # svelte-toolbelt
 
+## 0.11.0
+
+### Minor Changes
+
+- feat: export the `BoxSymbol` and `isWritableSymbol` box markers from the package entry so custom box implementations can be recognised by `isBox`/`isWritableBox` ([#89](https://github.com/huntabyte/svelte-toolbelt/pull/89))
+
 ## 0.10.7
 
 ### Patch Changes
