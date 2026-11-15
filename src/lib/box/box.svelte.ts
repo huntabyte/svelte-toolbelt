@@ -16,7 +16,7 @@ import {
  * @returns A box with a `current` property which can be set to a new value.
  * Useful to pass state to other functions.
  *
- * @see {@link https://runed.dev/docs/functions/box}
+ * @see {@link https://github.com/huntabyte/svelte-toolbelt#box | Box documentation}
  */
 export function box<T>(): WritableBox<T | undefined>;
 /**
@@ -26,7 +26,7 @@ export function box<T>(): WritableBox<T | undefined>;
  * @returns A box with a `current` property which can be set to a new value.
  * Useful to pass state to other functions.
  *
- * @see {@link https://runed.dev/docs/functions/box}
+ * @see {@link https://github.com/huntabyte/svelte-toolbelt#box | Box documentation}
  */
 export function box<T>(initialValue: T): WritableBox<T>;
 export function box(initialValue?: unknown) {
