@@ -12,13 +12,15 @@ npm install svelte-toolbelt
 
 ## Box
 
+A box wraps a value in a reactive `.current` property so you can pass it to other functions.
+
 ### `box`
 
 Initializes a writable boxed state.
 
 ```svelte
 <script lang="ts">
-	import { box } from "runed";
+	import { box } from "svelte-toolbelt";
 	const count = box(0);
 </script>
 
@@ -36,7 +38,7 @@ Useful for passing synced reactive values across boundaries.
 
 ```svelte
 <script lang="ts">
-	import { type WritableBox, box } from "runed";
+	import { box, type WritableBox } from "svelte-toolbelt";
 	function useCounter(count: WritableBox<number>) {
 		return {
 			increment() {
@@ -50,7 +52,7 @@ Useful for passing synced reactive values across boundaries.
 	// We pass count to box.with so it stays in sync
 	const { double, increment } = useCounter(
 		box.with(
-			() => count.current,
+			() => count,
 			(v) => (count = v)
 		)
 	);
@@ -70,7 +72,7 @@ Useful for receiving arguments that may or may not be reactive.
 
 ```svelte
 <script lang="ts">
-	import { box } from "runed";
+	import { box, type ReadableBox, type WritableBox } from "svelte-toolbelt";
 	function useCounter(_count: WritableBox<number> | number) {
 		const count = box.from(_count);
 		return {
@@ -133,7 +135,7 @@ console.log(readonlyCount.current); // 1
 count.current++;
 console.log(readonlyCount.current); // 2
 
-readonlyCount.current = 3; // Error: Cannot assign to read only property 'value' of object
+// readonlyCount.current is read-only.
 ```
 
 ### `box.isBox`
@@ -159,9 +161,11 @@ console.log(box.isWritableBox(double)); // false
 
 ### `unbox`
 
-Unboxes the value from a box.
+Returns a box’s current value, calls a getter, or returns a plain value as-is.
 
 ```ts
+import { box, unbox } from "svelte-toolbelt";
+
 const count = box(1);
 const double = box.with(() => count.current * 2);
 console.log(unbox(double)); // 2

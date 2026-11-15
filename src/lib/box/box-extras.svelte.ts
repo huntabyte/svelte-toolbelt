@@ -29,7 +29,7 @@ export type WritableBox<T> = ReadableBox<T> & {
  * @returns A box with a `current` property whose value is the result of the getter.
  * Useful to pass state to other functions.
  *
- * @see {@link https://runed.dev/docs/functions/box}
+ * @see {@link https://github.com/huntabyte/svelte-toolbelt#box | Box documentation}
  */
 function boxWith<T>(getter: () => T): ReadableBox<T>;
 /**
@@ -40,7 +40,7 @@ function boxWith<T>(getter: () => T): ReadableBox<T>;
  * @returns A box with a `current` property which can be set to a new value.
  * Useful to pass state to other functions.
  *
- * @see {@link https://runed.dev/docs/functions/box}
+ * @see {@link https://github.com/huntabyte/svelte-toolbelt#box | Box documentation}
  */
 function boxWith<T>(getter: () => T, setter: (v: T) => void): WritableBox<T>;
 function boxWith<T>(getter: () => T, setter?: (v: T) => void): ReadableBox<T> | WritableBox<T> {
@@ -102,7 +102,7 @@ Object.defineProperty(StateBox.prototype, isWritableSymbol, { value: true });
 /**
  * @returns Whether the value is a Box
  *
- * @see {@link https://runed.dev/docs/functions/box}
+ * @see {@link https://github.com/huntabyte/svelte-toolbelt#box | Box documentation}
  */
 function isBox(value: unknown): value is ReadableBox<unknown> {
 	return isObject(value) && BoxSymbol in value;
@@ -110,7 +110,7 @@ function isBox(value: unknown): value is ReadableBox<unknown> {
 /**
  * @returns Whether the value is a WritableBox
  *
- * @see {@link https://runed.dev/docs/functions/box}
+ * @see {@link https://github.com/huntabyte/svelte-toolbelt#box | Box documentation}
  */
 function isWritableBox(value: unknown): value is WritableBox<unknown> {
 	return isBox(value) && isWritableSymbol in value;
@@ -122,7 +122,7 @@ function isWritableBox(value: unknown): value is WritableBox<unknown> {
  *
  * @returns A box with a `current` property whose value.
  *
- * @see {@link https://runed.dev/docs/functions/box}
+ * @see {@link https://github.com/huntabyte/svelte-toolbelt#box | Box documentation}
  */
 function boxFrom<T>(value: T | WritableBox<T>): WritableBox<T>;
 function boxFrom<T>(value: ReadableBox<T>): ReadableBox<T>;
@@ -173,7 +173,7 @@ type BoxFlatten<R extends Record<string, unknown>> = Expand<
  * const flat = box.flatten({ count, double: box.with(() => count.current) })
  * // type of flat is { count: number, readonly double: number }
  *
- * @see {@link https://runed.dev/docs/functions/box}
+ * @see {@link https://github.com/huntabyte/svelte-toolbelt#box | Box documentation}
  */
 function boxFlatten<R extends Record<string, unknown>>(boxes: R): BoxFlatten<R> {
 	return Object.entries(boxes).reduce<BoxFlatten<R>>((acc, [key, b]) => {
@@ -210,7 +210,7 @@ function boxFlatten<R extends Record<string, unknown>>(boxes: R): BoxFlatten<R> 
  * const count = box(0) // WritableBox<number>
  * const countReadonly = box.readonly(count) // ReadableBox<number>
  *
- * @see {@link https://runed.dev/docs/functions/box}
+ * @see {@link https://github.com/huntabyte/svelte-toolbelt#box | Box documentation}
  */
 function toReadonlyBox<T>(b: ReadableBox<T>): ReadableBox<T> {
 	if (!isWritableBox(b)) return b;
@@ -224,7 +224,7 @@ function toReadonlyBox<T>(b: ReadableBox<T>): ReadableBox<T> {
  * @returns A box with a `current` property which can be set to a new value.
  * Useful to pass state to other functions.
  *
- * @see {@link https://runed.dev/docs/functions/box}
+ * @see {@link https://github.com/huntabyte/svelte-toolbelt#box | Box documentation}
  */
 function simpleBox<T>(): WritableBox<T | undefined>;
 /**
@@ -234,7 +234,7 @@ function simpleBox<T>(): WritableBox<T | undefined>;
  * @returns A box with a `current` property which can be set to a new value.
  * Useful to pass state to other functions.
  *
- * @see {@link https://runed.dev/docs/functions/box}
+ * @see {@link https://github.com/huntabyte/svelte-toolbelt#box | Box documentation}
  */
 function simpleBox<T>(initialValue: T): WritableBox<T>;
 function simpleBox(initialValue?: unknown) {
